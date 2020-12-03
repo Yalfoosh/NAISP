@@ -133,7 +133,12 @@ aStar(nodeMap field, const position &startingPoint = DEFAULT_STARTING_POINT,
             std::reverse(nodePath.begin(), nodePath.end());
 
             // Remember to readjust the real cost if we had
-            // to modify the field to be solvable.
+            // to modify the field to be solvable. We
+            // subtract the size of nodePath because every
+            // step we took was actually 1 cheaper - we
+            // added 1 to all, so now we have to subtract
+            // those additional flowers from the final
+            // score.
             if (didTransform)
                 cost -= nodePath.size();
 

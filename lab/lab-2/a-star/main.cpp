@@ -24,6 +24,7 @@ int main() {
                                    {200, 100,  600,  0},
                                    {300, 1600, 100,  0}
                            });
+
     auto result = aStar(example);
 
     auto path = result.first;
