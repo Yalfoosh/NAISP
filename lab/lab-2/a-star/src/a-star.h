@@ -77,6 +77,7 @@ aStar(nodeMap field, const position &startingPoint = DEFAULT_STARTING_POINT,
     // Initialize empty node collections.
     auto openNodes = nodeQueue();
     auto closedNodes = positionSet();
+    auto toDelete = std::vector<Node*>();
 
     // Find the lowest value field first.
     auto lowestValue = field[0][0];
@@ -136,6 +137,17 @@ aStar(nodeMap field, const position &startingPoint = DEFAULT_STARTING_POINT,
             if (didTransform)
                 cost -= nodePath.size();
 
+            for(auto x: toDelete)
+                delete x;
+
+            while(!openNodes.empty()){
+                auto x = openNodes.top();
+                openNodes.pop();
+
+                delete x;
+            }
+
+
             return make_pair(nodePath, cost);
         }
 
@@ -147,6 +159,7 @@ aStar(nodeMap field, const position &startingPoint = DEFAULT_STARTING_POINT,
         for (auto x: nodesToExplore) {
             openNodes.emplace(x);
         }
+        toDelete.push_back(openedNode);
     }
 
     // In the case of no solution, return an empty position
